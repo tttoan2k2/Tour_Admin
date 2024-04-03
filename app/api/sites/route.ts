@@ -41,3 +41,16 @@ export const POST = async (req: NextRequest) => {
         return new NextResponse("Internal server error", { status: 500 });
     }
 };
+
+export const GET = async (req: NextRequest) => {
+    try {
+        await connectToDB();
+
+        const sites = await Site.find().sort({ createdAt: "desc" });
+
+        return NextResponse.json(sites, { status: 200 });
+    } catch (err) {
+        console.log("[Site_GET]", err);
+        return new NextResponse("Internal server error", { status: 500 });
+    }
+};

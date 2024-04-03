@@ -25,34 +25,54 @@ import toast from "react-hot-toast";
 
 const formSchema = z.object({
     title: z.string().min(2).max(50),
-    description: z.string().min(2).max(500).trim(),
+    description: z.string().min(2).max(2000).trim(),
     image: z.string(),
 });
 
-const SiteForm = () => {
+interface SiteFormProps {
+    initiaData?: SiteType | null;
+}
+
+const SiteForm: React.FC<SiteFormProps> = ({ initiaData }) => {
     const router = useRouter();
     const [loading, setLoading] = useState(false);
 
     const form = useForm<z.infer<typeof formSchema>>({
         resolver: zodResolver(formSchema),
-        defaultValues: {
-            title: "",
-            description: "",
-            image: "",
-        },
+        defaultValues: initiaData
+            ? initiaData
+            : {
+                  title: "",
+                  description: "",
+                  image: "",
+              },
     });
+
+    const handleKeyPress = (
+        e:
+            | React.KeyboardEvent<HTMLInputElement>
+            | React.KeyboardEvent<HTMLTextAreaElement>
+    ) => {
+        if (e.key === "Enter") {
+            e.preventDefault();
+        }
+    };
 
     const onSubmit = async (values: z.infer<typeof formSchema>) => {
         try {
             setLoading(true);
-            const res = await fetch("/api/sites", {
+            const url = initiaData
+                ? `/api/sites/${initiaData._id}`
+                : "/api/sites";
+            const res = await fetch(url, {
                 method: "POST",
                 body: JSON.stringify(values),
             });
 
             if (res.ok) {
                 setLoading(false);
-                toast.success("Site created");
+                toast.success(`Site ${initiaData ? "updated" : "created"} `);
+                window.location.href = "/sites";
                 router.push("/sites");
             }
         } catch (err) {
@@ -63,7 +83,17 @@ const SiteForm = () => {
 
     return (
         <div className="p-10">
-            <p className="font-semibold text-[24px] text-black">Create Site</p>
+            {initiaData ? (
+                <div>
+                    <p className="font-semibold text-[24px] text-black">
+                        Edit Site
+                    </p>
+                </div>
+            ) : (
+                <p className="font-semibold text-[24px] text-black">
+                    Create Site
+                </p>
+            )}
             <Separator className="bg-gray-500 mt-4 mb-7" />
             <Form {...form}>
                 <form
@@ -77,7 +107,11 @@ const SiteForm = () => {
                             <FormItem>
                                 <FormLabel>Title</FormLabel>
                                 <FormControl>
-                                    <Input placeholder="Title" {...field} />
+                                    <Input
+                                        placeholder="Title"
+                                        {...field}
+                                        onKeyDown={handleKeyPress}
+                                    />
                                 </FormControl>
 
                                 <FormMessage />
@@ -96,6 +130,7 @@ const SiteForm = () => {
                                         placeholder="Description"
                                         {...field}
                                         rows={5}
+                                        onKeyDown={handleKeyPress}
                                     />
                                 </FormControl>
 
