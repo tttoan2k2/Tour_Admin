@@ -19,23 +19,24 @@ import toast from "react-hot-toast";
 
 interface DeleteProps {
     id: string;
+    item: string;
 }
 
-const Delete: React.FC<DeleteProps> = ({ id }) => {
+const Delete: React.FC<DeleteProps> = ({ id, item }) => {
     const [loading, setLoading] = useState(false);
 
     const onDelete = async () => {
         try {
             setLoading(true);
-
-            const res = await fetch(`/api/sites/${id}`, {
+            const itemType = item === "tour" ? "tours" : "sites";
+            const res = await fetch(`/api/${itemType}/${id}`, {
                 method: "DELETE",
             });
 
             if (res.ok) {
                 setLoading(false);
-                window.location.href = "/sites";
-                toast.success("Site deleted");
+                window.location.href = `${itemType}`;
+                toast.success(`${item} deleted`);
             }
         } catch (err) {
             console.log("[site_DELETE]", err);
@@ -46,7 +47,7 @@ const Delete: React.FC<DeleteProps> = ({ id }) => {
     return (
         <AlertDialog>
             <AlertDialogTrigger>
-                <Button className="bg-red-500 text-white">
+                <Button type="button" className="bg-red-500 text-white">
                     <Trash className="h-4 w-4" />
                 </Button>
             </AlertDialogTrigger>
@@ -57,7 +58,7 @@ const Delete: React.FC<DeleteProps> = ({ id }) => {
                     </AlertDialogTitle>
                     <AlertDialogDescription>
                         This action cannot be undone. This will permanently
-                        delete your site.
+                        delete your {item}.
                     </AlertDialogDescription>
                 </AlertDialogHeader>
                 <AlertDialogFooter>

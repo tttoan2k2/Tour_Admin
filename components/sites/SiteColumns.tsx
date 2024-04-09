@@ -24,6 +24,6 @@ export const columns: ColumnDef<SiteType>[] = [
     },
     {
         id: "actions",
-        cell: ({ row }) => <Delete id={row.original._id} />,
+        cell: ({ row }) => <Delete item="site" id={row.original._id} />,
     },
 ];

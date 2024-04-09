@@ -1,4 +1,5 @@
 import Site from "@/lib/models/Site";
+import Tour from "@/lib/models/Tour";
 import { connectToDB } from "@/lib/mongoDB";
 import { auth } from "@clerk/nextjs";
 import { NextRequest, NextResponse } from "next/server";
@@ -83,6 +84,15 @@ export const DELETE = async (
         await connectToDB();
 
         await Site.findByIdAndDelete(params.siteId);
+
+        await Tour.updateMany(
+            {
+                sites: params.siteId,
+            },
+            {
+                $pull: { sites: params.siteId },
+            }
+        );
 
         return new NextResponse("Site is deleted.", { status: 200 });
     } catch (err) {
