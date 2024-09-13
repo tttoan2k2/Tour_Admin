@@ -6,6 +6,7 @@ import {
     flexRender,
     getCoreRowModel,
     getFilteredRowModel,
+    getPaginationRowModel,
     useReactTable,
 } from "@tanstack/react-table";
 
@@ -19,6 +20,7 @@ import {
 } from "@/components/ui/table";
 import { Input } from "../ui/input";
 import { useState } from "react";
+import { Button } from "@/components/ui/button";
 
 interface DataTableProps<TData, TValue> {
     columns: ColumnDef<TData, TValue>[];
@@ -32,14 +34,24 @@ export function DataTable<TData, TValue>({
     searchKey,
 }: DataTableProps<TData, TValue>) {
     const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([]);
+    const [pagination, setPagination] = useState({
+        pageIndex: 0,
+        pageSize: 5,
+    });
+
+    const totalPage = Math.round(data.length / 5);
+    const [numberPage, setNumberPage] = useState(1);
     const table = useReactTable({
         data,
         columns,
         getCoreRowModel: getCoreRowModel(),
         onColumnFiltersChange: setColumnFilters,
         getFilteredRowModel: getFilteredRowModel(),
+        onPaginationChange: setPagination,
+        getPaginationRowModel: getPaginationRowModel(),
         state: {
             columnFilters,
+            pagination,
         },
     });
 
@@ -47,7 +59,7 @@ export function DataTable<TData, TValue>({
         <div className="py-5">
             <div className="flex items-center py-4">
                 <Input
-                    placeholder="Search..."
+                    placeholder="Tìm kiếm..."
                     value={
                         (table
                             .getColumn(searchKey)
@@ -113,6 +125,36 @@ export function DataTable<TData, TValue>({
                         )}
                     </TableBody>
                 </Table>
+            </div>
+
+            <div className="flex items-center justify-between">
+                <p>
+                    Page: {numberPage}/{totalPage}
+                </p>
+                <div className="flex items-center justify-end space-x-2 py-4">
+                    <Button
+                        variant="outline"
+                        size="sm"
+                        onClick={() => {
+                            table.previousPage();
+                            setNumberPage(numberPage - 1);
+                        }}
+                        disabled={!table.getCanPreviousPage()}
+                    >
+                        Previous
+                    </Button>
+                    <Button
+                        variant="outline"
+                        size="sm"
+                        onClick={() => {
+                            table.nextPage();
+                            setNumberPage(numberPage + 1);
+                        }}
+                        disabled={!table.getCanNextPage()}
+                    >
+                        Next
+                    </Button>
+                </div>
             </div>
         </div>
     );

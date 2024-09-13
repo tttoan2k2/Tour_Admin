@@ -6,6 +6,13 @@ type SiteType = {
     tours: TourType[];
 };
 
+type NewsType = {
+    _id: string;
+    title: string;
+    description: string;
+    image: string;
+};
+
 type TourType = {
     _id: string;
     title: string;
@@ -21,4 +28,31 @@ type TourType = {
     quy_dinh: [string];
     createdAt: Date;
     updatedAt: Date;
+};
+
+type OrderColumnType = {
+    _id: string;
+    customer: string;
+    tourName: string;
+    tours: number;
+    date: string;
+    totalAmount: number;
+    createdAt: string;
+};
+
+type OrderItemType = {
+    tour: TourType;
+    tourDate: string;
+    adultPrice: number;
+    adultQuantity: number;
+    childrenPrice: number;
+    childrenQuantity: number;
+    infantPrice: number;
+    infantQuantity: number;
+};
+
+type CustomerType = {
+    clerkId: string;
+    name: string;
+    email: string;
 };

@@ -1,11 +1,10 @@
 "use client";
 
-import { Separator } from "../ui/separator";
-
-import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
+import { z } from "zod";
 
+import { Separator } from "../ui/separator";
 import { Button } from "@/components/ui/button";
 import {
     Form,
@@ -24,16 +23,16 @@ import { useState } from "react";
 import toast from "react-hot-toast";
 
 const formSchema = z.object({
-    title: z.string().min(2).max(50),
-    description: z.string().min(2).max(2000).trim(),
+    title: z.string().min(2).max(100),
+    description: z.string().min(2).max(10000).trim(),
     image: z.string(),
 });
 
-interface SiteFormProps {
-    initiaData?: SiteType | null;
+interface NewsFormProps {
+    initiaData?: NewsType | null;
 }
 
-const SiteForm: React.FC<SiteFormProps> = ({ initiaData }) => {
+const NewsForm: React.FC<NewsFormProps> = ({ initiaData }) => {
     const router = useRouter();
     const [loading, setLoading] = useState(false);
 
@@ -62,8 +61,8 @@ const SiteForm: React.FC<SiteFormProps> = ({ initiaData }) => {
         try {
             setLoading(true);
             const url = initiaData
-                ? `/api/sites/${initiaData._id}`
-                : "/api/sites";
+                ? `/api/news/${initiaData._id}`
+                : "/api/news";
             const res = await fetch(url, {
                 method: "POST",
                 body: JSON.stringify(values),
@@ -72,15 +71,14 @@ const SiteForm: React.FC<SiteFormProps> = ({ initiaData }) => {
             if (res.ok) {
                 setLoading(false);
                 toast.success(
-                    `Địa danh đã được ${
-                        initiaData ? "sửa" : "tạo"
-                    } thành công. `
+                    `Tin tức đã được ${initiaData ? "sửa" : "tạo"} thành công `
                 );
-                window.location.href = "/sites";
-                router.push("/sites");
+
+                window.location.href = "/news";
+                router.push("/news");
             }
         } catch (err) {
-            console.log("[SiteForm]", err);
+            console.log("[news_POST]", err);
             toast.error("Có một lỗi gì đó! Vui lòng thử lại.");
         }
     };
@@ -90,12 +88,12 @@ const SiteForm: React.FC<SiteFormProps> = ({ initiaData }) => {
             {initiaData ? (
                 <div>
                     <p className="font-semibold text-[24px] text-black">
-                        Chỉnh sửa địa danh
+                        Chỉnh sửa tin tức
                     </p>
                 </div>
             ) : (
                 <p className="font-semibold text-[24px] text-black">
-                    Tạo địa danh
+                    Tạo tin tức
                 </p>
             )}
             <Separator className="bg-gray-500 mt-4 mb-7" />
@@ -128,10 +126,10 @@ const SiteForm: React.FC<SiteFormProps> = ({ initiaData }) => {
                         name="description"
                         render={({ field }) => (
                             <FormItem>
-                                <FormLabel>Mô tả</FormLabel>
+                                <FormLabel>Nội dung</FormLabel>
                                 <FormControl>
                                     <Textarea
-                                        placeholder="Mô tả"
+                                        placeholder="Nội dung"
                                         {...field}
                                         rows={5}
                                         onKeyDown={handleKeyPress}
@@ -176,4 +174,4 @@ const SiteForm: React.FC<SiteFormProps> = ({ initiaData }) => {
     );
 };
 
-export default SiteForm;
+export default NewsForm;

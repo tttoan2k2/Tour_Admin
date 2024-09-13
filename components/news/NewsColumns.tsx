@@ -4,26 +4,27 @@ import { ColumnDef } from "@tanstack/react-table";
 import Delete from "../custom ui/Delete";
 import Link from "next/link";
 
-export const columns: ColumnDef<SiteType>[] = [
+export const columns: ColumnDef<NewsType>[] = [
     {
         accessorKey: "title",
-        header: "Tên quốc gia",
+        header: "Tiêu đề",
         cell: ({ row }) => (
             <Link
                 className="hover:text-black"
-                href={`/sites/${row.original._id}`}
+                href={`/news/${row.original._id}`}
             >
                 <p>{row.original.title}</p>
             </Link>
         ),
     },
+
     {
-        accessorKey: "tours",
-        header: "Số Tour hiện có",
-        cell: ({ row }) => <p>{row.original.tours.length}</p>,
+        accessorKey: "createAt",
+        header: "Thời gian tạo",
     },
+
     {
         id: "actions",
-        cell: ({ row }) => <Delete item="sites" id={row.original._id} />,
+        cell: ({ row }) => <Delete item="news" id={row.original._id} />,
     },
 ];

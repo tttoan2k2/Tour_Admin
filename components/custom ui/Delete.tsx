@@ -28,19 +28,19 @@ const Delete: React.FC<DeleteProps> = ({ id, item }) => {
     const onDelete = async () => {
         try {
             setLoading(true);
-            const itemType = item === "tour" ? "tours" : "sites";
-            const res = await fetch(`/api/${itemType}/${id}`, {
+
+            const res = await fetch(`/api/${item}/${id}`, {
                 method: "DELETE",
             });
 
             if (res.ok) {
                 setLoading(false);
-                window.location.href = `${itemType}`;
-                toast.success(`${item} deleted`);
+                window.location.href = `${item}`;
+                toast.success(`Đã xóa ${item} thành công.`);
             }
         } catch (err) {
-            console.log("[site_DELETE]", err);
-            toast.error("Something went wrong. Please try again!");
+            console.log("[DELETE]", err);
+            toast.error("Có lỗi xảy ra! Vui lòng thử lại.");
         }
     };
 
@@ -54,17 +54,16 @@ const Delete: React.FC<DeleteProps> = ({ id, item }) => {
             <AlertDialogContent>
                 <AlertDialogHeader>
                     <AlertDialogTitle>
-                        Are you absolutely sure?
+                        Bạn có chắc muốn xóa không?
                     </AlertDialogTitle>
                     <AlertDialogDescription>
-                        This action cannot be undone. This will permanently
-                        delete your {item}.
+                        Hành động này sẽ xóa {item} của bạn.
                     </AlertDialogDescription>
                 </AlertDialogHeader>
                 <AlertDialogFooter>
-                    <AlertDialogCancel>Cancel</AlertDialogCancel>
+                    <AlertDialogCancel>Hủy bỏ</AlertDialogCancel>
                     <AlertDialogAction onClick={onDelete}>
-                        Continue
+                        Tiếp tục
                     </AlertDialogAction>
                 </AlertDialogFooter>
             </AlertDialogContent>

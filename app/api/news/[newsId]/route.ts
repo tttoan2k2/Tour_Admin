@@ -1,38 +1,34 @@
-import Site from "@/lib/models/Site";
-import Tour from "@/lib/models/Tour";
+import News from "@/lib/models/News";
 import { connectToDB } from "@/lib/mongoDB";
 import { auth } from "@clerk/nextjs";
 import { NextRequest, NextResponse } from "next/server";
 
 export const GET = async (
     req: NextRequest,
-    { params }: { params: { siteId: string } }
+    { params }: { params: { newsId: string } }
 ) => {
     try {
         await connectToDB();
 
-        const site = await Site.findById(params.siteId).populate({
-            path: "tours",
-            model: Tour,
-        });
+        const news = await News.findById(params.newsId);
 
-        if (!site) {
+        if (!news) {
             return new NextResponse(
                 JSON.stringify({ message: "Không tìm thấy!" }),
                 { status: 404 }
             );
         }
 
-        return NextResponse.json(site, { status: 200 });
+        return NextResponse.json(news, { status: 200 });
     } catch (err) {
-        console.log("[siteId_GET]", err);
+        console.log("[newsId_GET]", err);
         return new NextResponse("Internal error", { status: 500 });
     }
 };
 
 export const POST = async (
     req: NextRequest,
-    { params }: { params: { siteId: string } }
+    { params }: { params: { newsId: string } }
 ) => {
     try {
         const { userId } = auth();
@@ -43,9 +39,9 @@ export const POST = async (
 
         await connectToDB();
 
-        let site = await Site.findById(params.siteId);
+        let news = await News.findById(params.newsId);
 
-        if (!site) {
+        if (!news) {
             return new NextResponse(
                 JSON.stringify({ message: "Site not found" }),
                 { status: 404 }
@@ -54,28 +50,28 @@ export const POST = async (
 
         const { title, description, image } = await req.json();
 
-        if (!title || !image) {
-            return new NextResponse("Title and image are required", {
+        if (!title || !description || !image) {
+            return new NextResponse("Missing values.", {
                 status: 400,
             });
         }
 
-        site = await Site.findByIdAndUpdate(
-            params.siteId,
+        news = await News.findByIdAndUpdate(
+            params.newsId,
             { title, description, image },
             { new: true }
         );
 
-        return NextResponse.json(site, { status: 200 });
+        return NextResponse.json(news, { status: 200 });
     } catch (err) {
-        console.log("[siteId_POST]", err);
+        console.log("[newsId_POST]", err);
         return new NextResponse("Internal error", { status: 500 });
     }
 };
 
 export const DELETE = async (
     req: NextRequest,
-    { params }: { params: { siteId: string } }
+    { params }: { params: { newsId: string } }
 ) => {
     try {
         const { userId } = auth();
@@ -86,22 +82,11 @@ export const DELETE = async (
 
         await connectToDB();
 
-        await Site.findByIdAndDelete(params.siteId);
+        await News.findByIdAndDelete(params.newsId);
 
-        await Tour.updateMany(
-            {
-                sites: params.siteId,
-            },
-            {
-                $pull: { sites: params.siteId },
-            }
-        );
-
-        return new NextResponse("Site is deleted.", { status: 200 });
+        return new NextResponse("News is deleted", { status: 200 });
     } catch (err) {
-        console.log("[siteId_DELETE]", err);
+        console.log("[newsId_DELETE]", err);
         return new NextResponse("Internal error", { status: 500 });
     }
 };
-
-export const dynamic = "force-dynamic";

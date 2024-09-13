@@ -28,7 +28,7 @@ const Leftsidebar = () => {
 
             <div className="flex gap-4 text-[17px] items-center font-medium hover:text-black">
                 <UserButton />
-                <p>Profile</p>
+                <p>Hồ sơ</p>
             </div>
         </div>
     );

@@ -7,7 +7,7 @@ import Link from "next/link";
 export const columns: ColumnDef<TourType>[] = [
     {
         accessorKey: "title",
-        header: "Title",
+        header: "Tiêu đề",
         cell: ({ row }) => (
             <Link
                 className="hover:text-black"
@@ -19,24 +19,24 @@ export const columns: ColumnDef<TourType>[] = [
     },
     {
         accessorKey: "category",
-        header: "Category",
+        header: "Loại hình",
     },
     {
         accessorKey: "sites",
-        header: "Sites",
+        header: "Thuộc quốc gia",
         cell: ({ row }) =>
             row.original.sites.map((site) => site.title).join(", "),
     },
     {
         accessorKey: "diem_khoi_hanh",
-        header: "Start At",
+        header: "Điểm khởi hành",
     },
     {
         accessorKey: "price",
-        header: "Price",
+        header: "Giá",
     },
     {
         id: "actions",
-        cell: ({ row }) => <Delete item="tour" id={row.original._id} />,
+        cell: ({ row }) => <Delete item="tours" id={row.original._id} />,
     },
 ];
