@@ -16,7 +16,7 @@ export const navLinks = [
     {
         url: "/sites",
         icon: <Shapes />,
-        label: "Quốc gia",
+        label: "Địa danh",
     },
     {
         url: "/tours",

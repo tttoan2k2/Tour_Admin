@@ -14,11 +14,6 @@ const OrderDetails = ({ params }: { params: { orderId: string } }) => {
     const [orderData, setOrderData] = useState<any>();
     const [customerData, setCustomerData] = useState<any>();
 
-    // const res = await fetch(
-    //     `http://localhost:3000/api/orders/${params.orderId}`
-    // );
-    // const { orderDetails, customer } = await res.json();
-
     let componentRef = useRef(null);
 
     const handlePrint = useReactToPrint({
@@ -248,14 +243,10 @@ const OrderDetails = ({ params }: { params: { orderId: string } }) => {
             <div className="print:hidden mt-[20px]">
                 <Button onClick={handlePrint}>In hóa đơn</Button>
             </div>
-
-            {/* <DataTable
-                columns={columns}
-                data={orderData?.tours}
-                searchKey="tour"
-            /> */}
         </div>
     );
 };
 
 export default OrderDetails;
+
+export const dynamic = "force-dynamic";
