@@ -23,7 +23,7 @@ export const columns: ColumnDef<TourType>[] = [
     },
     {
         accessorKey: "sites",
-        header: "Thuộc quốc gia",
+        header: "Thuộc địa danh",
         cell: ({ row }) =>
             row.original.sites.map((site) => site.title).join(", "),
     },
