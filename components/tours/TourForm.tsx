@@ -128,12 +128,12 @@ const TourForm: React.FC<TourFormProps> = ({ initiaData }) => {
             {initiaData ? (
                 <div>
                     <p className="font-semibold text-[24px] text-black">
-                        Edit Tour
+                        Chỉnh sửa Tour
                     </p>
                 </div>
             ) : (
                 <p className="font-semibold text-[24px] text-black">
-                    Create Tour
+                    Thêm Tour
                 </p>
             )}
             <Separator className="bg-gray-500 mt-4 mb-7" />
@@ -147,10 +147,10 @@ const TourForm: React.FC<TourFormProps> = ({ initiaData }) => {
                         name="title"
                         render={({ field }) => (
                             <FormItem>
-                                <FormLabel>Title</FormLabel>
+                                <FormLabel>Tiêu đề</FormLabel>
                                 <FormControl>
                                     <Input
-                                        placeholder="Title"
+                                        placeholder="Nhập tiêu đề"
                                         {...field}
                                         onKeyDown={handleKeyPress}
                                     />
@@ -165,10 +165,10 @@ const TourForm: React.FC<TourFormProps> = ({ initiaData }) => {
                         name="description"
                         render={({ field }) => (
                             <FormItem>
-                                <FormLabel>Description</FormLabel>
+                                <FormLabel>Mô tả</FormLabel>
                                 <FormControl>
                                     <Textarea
-                                        placeholder="Description"
+                                        placeholder="Nhập mô tả"
                                         {...field}
                                         rows={5}
                                         onKeyDown={handleKeyPress}
@@ -185,10 +185,10 @@ const TourForm: React.FC<TourFormProps> = ({ initiaData }) => {
                         name="diem_khoi_hanh"
                         render={({ field }) => (
                             <FormItem>
-                                <FormLabel>Start At</FormLabel>
+                                <FormLabel>Khởi hành tại</FormLabel>
                                 <FormControl>
                                     <Input
-                                        placeholder="Start At"
+                                        placeholder="Nhập điểm khởi hành"
                                         {...field}
                                         onKeyDown={handleKeyPress}
                                     />
@@ -203,7 +203,7 @@ const TourForm: React.FC<TourFormProps> = ({ initiaData }) => {
                         name="media"
                         render={({ field }) => (
                             <FormItem>
-                                <FormLabel>Imgae</FormLabel>
+                                <FormLabel>Ảnh</FormLabel>
                                 <FormControl>
                                     <ImageUpload
                                         value={field.value}
@@ -232,11 +232,11 @@ const TourForm: React.FC<TourFormProps> = ({ initiaData }) => {
                             name="price"
                             render={({ field }) => (
                                 <FormItem>
-                                    <FormLabel>Price</FormLabel>
+                                    <FormLabel>Giá</FormLabel>
                                     <FormControl>
                                         <Input
                                             type="number"
-                                            placeholder="Price"
+                                            placeholder="Nhập giá"
                                             {...field}
                                             onKeyDown={handleKeyPress}
                                         />
@@ -251,10 +251,10 @@ const TourForm: React.FC<TourFormProps> = ({ initiaData }) => {
                             name="category"
                             render={({ field }) => (
                                 <FormItem>
-                                    <FormLabel>Category</FormLabel>
+                                    <FormLabel>Loại hình</FormLabel>
                                     <FormControl>
                                         <Input
-                                            placeholder="Category"
+                                            placeholder="Nhập loại hình"
                                             {...field}
                                             onKeyDown={handleKeyPress}
                                         />
@@ -269,10 +269,10 @@ const TourForm: React.FC<TourFormProps> = ({ initiaData }) => {
                             name="lich_trinh"
                             render={({ field }) => (
                                 <FormItem>
-                                    <FormLabel>Scheldules</FormLabel>
+                                    <FormLabel>Lịch trình</FormLabel>
                                     <FormControl>
                                         <MultiText
-                                            placeholder="Schedules"
+                                            placeholder="Nhập lịch trình"
                                             value={field.value}
                                             onChange={(schedule) =>
                                                 field.onChange([
@@ -301,10 +301,10 @@ const TourForm: React.FC<TourFormProps> = ({ initiaData }) => {
                             name="thoi_gian"
                             render={({ field }) => (
                                 <FormItem>
-                                    <FormLabel>Dates</FormLabel>
+                                    <FormLabel>Thời gian khởi hành</FormLabel>
                                     <FormControl>
                                         <MultiText
-                                            placeholder="Dates"
+                                            placeholder="Nhập thời gian khởi hành"
                                             value={field.value}
                                             onChange={(date) =>
                                                 field.onChange([
@@ -333,10 +333,10 @@ const TourForm: React.FC<TourFormProps> = ({ initiaData }) => {
                             name="sites"
                             render={({ field }) => (
                                 <FormItem>
-                                    <FormLabel>Sites</FormLabel>
+                                    <FormLabel>Thuộc địa danh</FormLabel>
                                     <FormControl>
                                         <MultiSelect
-                                            placeholder="Sites"
+                                            placeholder="Chọn địa danh"
                                             sites={sites}
                                             value={field.value}
                                             onChange={(_id) =>
@@ -366,10 +366,10 @@ const TourForm: React.FC<TourFormProps> = ({ initiaData }) => {
                             name="tong_quan"
                             render={({ field }) => (
                                 <FormItem>
-                                    <FormLabel>Overviews</FormLabel>
+                                    <FormLabel>Tổng quan</FormLabel>
                                     <FormControl>
                                         <MultiText
-                                            placeholder="Overviews"
+                                            placeholder="Nhập tổng quan"
                                             value={field.value}
                                             onChange={(overview) =>
                                                 field.onChange([
@@ -398,10 +398,10 @@ const TourForm: React.FC<TourFormProps> = ({ initiaData }) => {
                             name="quy_dinh"
                             render={({ field }) => (
                                 <FormItem>
-                                    <FormLabel>Rules</FormLabel>
+                                    <FormLabel>Quy định</FormLabel>
                                     <FormControl>
                                         <MultiText
-                                            placeholder="Rules"
+                                            placeholder="Nhập quy định"
                                             value={field.value}
                                             onChange={(rule) =>
                                                 field.onChange([
@@ -426,12 +426,12 @@ const TourForm: React.FC<TourFormProps> = ({ initiaData }) => {
                         />
                     </div>
                     <div className="flex gap-10">
-                        <Button type="submit">Submit</Button>
+                        <Button type="submit">Xác nhận</Button>
                         <Button
                             type="button"
                             onClick={() => router.push("/tours")}
                         >
-                            Discard
+                            Hủy bỏ
                         </Button>
                     </div>
                 </form>

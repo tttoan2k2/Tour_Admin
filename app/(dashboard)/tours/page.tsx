@@ -40,7 +40,7 @@ const Tours = () => {
                 <p className="font-semibold text-[24px] text-black">Tours</p>
                 <Button onClick={() => router.push("/tours/new")}>
                     <Plus className="h-4 w-4 mr-2" />
-                    Create Site
+                    Thêm Tour
                 </Button>
             </div>
             <Separator className="bg-gray-500 mt-4 mb-7" />
