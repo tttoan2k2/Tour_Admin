@@ -26,9 +26,9 @@ export const GET = async (req: NextRequest) => {
                         order.tours[0]?.childrenQuantity +
                         order.tours[0]?.infantQuantity,
 
-                    date: format(order.tours[0]?.tourDate, "MM do, yyyy"),
+                    date: format(order.tours[0]?.tourDate, "MMM do, yyyy"),
                     totalAmount: order.totalAmount,
-                    createdAt: format(order.createdAt, "MM do, yyyy"),
+                    createdAt: format(order.createdAt, "MMM do, yyyy"),
                 };
             })
         );

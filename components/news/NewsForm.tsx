@@ -163,7 +163,7 @@ const NewsForm: React.FC<NewsFormProps> = ({ initiaData }) => {
                         <Button type="submit">Xác nhận</Button>
                         <Button
                             type="button"
-                            onClick={() => router.push("/sites")}
+                            onClick={() => router.push("/news")}
                         >
                             Hủy bỏ
                         </Button>

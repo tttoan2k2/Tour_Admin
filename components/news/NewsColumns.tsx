@@ -19,7 +19,7 @@ export const columns: ColumnDef<NewsType>[] = [
     },
 
     {
-        accessorKey: "createAt",
+        accessorKey: "createdAt",
         header: "Thời gian tạo",
     },
 
