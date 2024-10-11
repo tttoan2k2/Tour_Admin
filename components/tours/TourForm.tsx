@@ -27,7 +27,7 @@ import MultiSelect from "../custom ui/MultiSelect";
 import Loader from "../custom ui/Loader";
 
 const formSchema = z.object({
-    title: z.string().min(2).max(50),
+    title: z.string().min(2).max(500),
     description: z.string().min(2).max(2000).trim(),
     media: z.array(z.string()),
     category: z.string(),
@@ -111,7 +111,11 @@ const TourForm: React.FC<TourFormProps> = ({ initiaData }) => {
 
             if (res.ok) {
                 setLoading(false);
-                toast.success(`Site ${initiaData ? "updated" : "created"} `);
+                toast.success(
+                    `Tour du lịch đã được ${
+                        initiaData ? "sửa" : "tạo"
+                    } thành công`
+                );
                 window.location.href = "/tours";
                 router.push("/tours");
             }
